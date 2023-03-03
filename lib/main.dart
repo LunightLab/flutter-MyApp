@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils/log.dart';
+import 'package:myapp/utils/helper.dart';
+import 'dart:async';
 
 // import 'package:flutter/cupertino.dart';
 // import 'dart:io';
 
 void main() {
   Log.info("main - logtest");
-  Log.info('$main().toString');
 
-  runApp(const MyApp());
+  // init preperence
+  Helper.initLibrary();
+
+  // main에서 async method 사용시 추가
+  WidgetsFlutterBinding.ensureInitialized();
+  Timer(const Duration(seconds: 5), () {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
