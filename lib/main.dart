@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/utils/log.dart';
+
 // import 'package:flutter/cupertino.dart';
 // import 'dart:io';
 
 void main() {
+  Log.info("main - logtest");
+  Log.info('$main().toString');
+
   runApp(const MyApp());
 }
 
@@ -20,6 +25,7 @@ class MyApp extends StatelessWidget {
     //     home: MyHomePage(title: 'Flutter Demo Home Page'),
     //   );
     // }
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
