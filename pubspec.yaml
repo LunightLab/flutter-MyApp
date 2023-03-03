@@ -38,6 +38,7 @@ dependencies:
   flutter_platform_widgets: ^3.0.0
   logger: ^1.2.2
   shared_preferences: ^2.0.18
+  hooks_riverpod: ^2.3.0
 
 dev_dependencies:
   flutter_test:

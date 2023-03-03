@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils/log.dart';
 import 'package:myapp/utils/helper.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:async';
 
 // import 'package:flutter/cupertino.dart';
@@ -12,10 +13,16 @@ void main() {
   // init preperence
   Helper.initLibrary();
 
-  // main에서 async method 사용시 추가
-  WidgetsFlutterBinding.ensureInitialized();
-  Timer(const Duration(seconds: 5), () {
-    runApp(const MyApp());
+  // 강제종료에 대한 예외처리
+  runZonedGuarded(() {
+    // main에서 async method 사용시 추가
+    WidgetsFlutterBinding.ensureInitialized();
+    Timer(const Duration(seconds: 5), () {
+      // 상태 변경체크를 하기 위해 Provider로 감싸줌.
+      runApp(const ProviderScope(child: MyApp()));
+    });
+  }, (error, stack) {
+    Log.error(error);
   });
 }
 
