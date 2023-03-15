@@ -42,7 +42,7 @@ dependencies:
     sdk: flutter
 
   # For architecture
-  hooks_riverpod: ^2.3.0
+  hooks_riverpod: ^2.3.0 # ^가 없으면 fix version
   flutter_hooks: ^0.18.6
   rxdart: ^0.27.7
 
