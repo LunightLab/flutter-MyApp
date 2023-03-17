@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // BuildContext MyApp 위젯을 부르는 부모위젯의 위치정보를 담음
     // if (Platform.isIOS) {
     //   return const CupertinoApp(
     //     debugShowCheckedModeBanner: false,
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -93,9 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        //RGB값에 opacity 적용하기
+        //opacity) 0 ~ 1, 1 초과시 원하는 결과가 나오지 않음
+        //Color.fromRGBO(255, 0, 1, 0.3),
+        title: Text(
+          widget.title,
+          style: const TextStyle(color: Color.fromARGB(255, 241, 240, 240)),
+        ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
