@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/utils/log.dart';
-import 'package:myapp/utils/helper.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'dart:async';
-
-// import 'package:flutter/cupertino.dart';
-// import 'dart:io';
 
 void main() {
   Log.info("main - logtest");
 
-  // init preperence
-  Helper.initLibrary();
+// // init preperence
+// Helper.initLibrary();
 
-  // 강제종료에 대한 예외처리
-  runZonedGuarded(() {
-    // main에서 async method 사용시 추가
-    WidgetsFlutterBinding.ensureInitialized();
-    Timer(const Duration(seconds: 5), () {
-      // 상태 변경체크를 하기 위해 Provider로 감싸줌.
-      runApp(const ProviderScope(child: MyApp()));
-    });
-  }, (error, stack) {
-    Log.error(error);
-  });
+// 강제종료에 대한 예외처리
+// runZonedGuarded(() {
+  // main에서 async method 사용시 추가
+  WidgetsFlutterBinding.ensureInitialized();
+  // Timer(const Duration(seconds: 5), () {
+  // 상태 변경체크를 하기 위해 Provider로 감싸줌.
+  runApp(const MyApp());
+  // });
+// }, (error, stack;) {
+  // Log.error(error);
+// });
 }
 
 class MyApp extends StatelessWidget {
@@ -47,51 +41,31 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const CustomGridPage(title: 'Custom Grid'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+class CustomGridPage extends StatefulWidget {
+  const CustomGridPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CustomGridPage> createState() => _CustomGridPage();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CustomGridPage extends State<CustomGridPage> {
   int _counter = 0;
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         //RGB값에 opacity 적용하기
@@ -103,23 +77,49 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[],
+        ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+// MARK: - Base Page
+////////////////////////////////////////////////////////////////////////////////
+class BasicPage extends StatefulWidget {
+  const BasicPage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<BasicPage> createState() => _BasicPage();
+}
+
+class _BasicPage extends State<BasicPage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        //RGB값에 opacity 적용하기
+        //opacity) 0 ~ 1, 1 초과시 원하는 결과가 나오지 않음
+        //Color.fromRGBO(255, 0, 1, 0.3),
+        title: Text(
+          widget.title,
+          style: const TextStyle(color: Color.fromARGB(255, 241, 240, 240)),
+        ),
+      ),
+      body: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -138,5 +138,37 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+class AllSelectBtnWidget extends StatefulWidget implements PreferredSizeWidget {
+  final String title;
+  final VoidCallback? action;
+  const AllSelectBtnWidget({super.key, this.title = '', this.action});
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {
+        action?.call();
+      },
+      style: OutlinedButton.styleFrom(
+          textStyle: const TextStyle(
+        color: Color(0xff000000),
+        fontSize: 14, // TODO: ADD font style
+      )),
+      child: const Text('증권 한번에 선택'),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56);
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }

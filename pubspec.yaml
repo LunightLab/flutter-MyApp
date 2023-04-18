@@ -77,6 +77,9 @@ dependencies:
 
   # For assets
   build_runner: ^2.3.3
+  flutter_simple_treeview: ^3.0.2
+  url_launcher: ^6.1.10
+  flutter_treeview: ^1.0.7+1
 
 
 # 개발용 패키지 의존성
